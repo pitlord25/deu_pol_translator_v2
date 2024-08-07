@@ -166,7 +166,8 @@ def api_translate():
                 "role" : "user",
                 "content" : content
             }
-        ]
+        ],
+        temperature=0
     )
     translation = response.choices[0].message.content
 
