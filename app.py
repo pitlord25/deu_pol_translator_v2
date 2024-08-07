@@ -6,8 +6,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
+DB_NAME = os.getenv("DB_NAME")
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:dragontiger19990802@localhost/translator_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://DB_USER:DB_PASSWORD@DB_HOST/DB_NAME'
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['PROMPT_FILE'] = 'system_prompt.txt'
 db = SQLAlchemy(app)
