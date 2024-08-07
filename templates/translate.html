@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Translate Page</h2>
+
+<!-- Form to Translate Text -->
+<form method="post" action="{{ url_for('translate') }}">
+    <div class="form-group">
+        <label for="text-to-translate">Text to translate:</label>
+        <textarea class="form-control" id="text-to-translate" name="text_to_translate" rows="4"></textarea>
+    </div>
+    <button type="submit" name="translate" class="btn btn-primary">Translate</button>
+</form>
+
+<!-- Form to Add Feedback -->
+<form method="post" action="{{ url_for('translate') }}">
+    <div class="form-group">
+        <label for="feedback">Feedback:</label>
+        <input type="text" class="form-control" id="feedback" name="feedback">
+    </div>
+    <button type="submit" name="add_feedback" class="btn btn-secondary">Add Feedback</button>
+</form>
+
+<!-- Display Translation Result -->
+{% if translation %}
+    <h3>Translation:</h3>
+    <p>{{ translation }}</p>
+{% endif %}
+
+<!-- Toastr CSS and JS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script>
+    // Show toastr alert if feedback was added successfully
+    {% if get_flashed_messages(with_categories=True) %}
+        {% for category, message in get_flashed_messages(with_categories=True) %}
+            {% if category == 'success' %}
+                toastr.success("{{ message }}");
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</script>
+
+{% endblock %}

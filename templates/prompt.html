@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Manage Main Prompt</h2>
+<form method="post" action="{{ url_for('prompt') }}">
+    <div class="form-group">
+        <label for="prompt">Prompt:</label>
+        <textarea class="form-control" id="prompt" name="prompt" rows="10">{{ prompt_text }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+{% endblock %}

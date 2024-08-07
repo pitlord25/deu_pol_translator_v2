@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Manage Rules</h2>
+<form method="post" action="{{ url_for('rules') }}">
+    <div class="form-group">
+        <label for="case">Case:</label>
+        <input type="text" class="form-control" id="case" name="case" required>
+    </div>
+    <div class="form-group">
+        <label for="instruction">Instruction:</label>
+        <input type="text" class="form-control" id="instruction" name="instruction" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Rule</button>
+</form>
+<hr>
+<h3>Existing Rules</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Case</th>
+            <th>Instruction</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for rule in rules %}
+        <tr>
+            <td>{{ rule.id }}</td>
+            <td>{{ rule.case }}</td>
+            <td>{{ rule.instruction }}</td>
+            <td>
+                <!-- <button class="btn btn-warning" data-toggle="modal" data-target="#updateModal{{ rule.id }}">Edit</button> -->
+                <a href="{{ url_for('delete_rule', id=rule.id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this rule?');">Delete</a>
+            </td>
+        </tr>
+
+        <!-- Update Modal -->
+        <div class="modal fade" id="updateModal{{ rule.id }}" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel{{ rule.id }}" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateModalLabel{{ rule.id }}">Update Rule</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" action="{{ url_for('update_rule', id=rule.id) }}">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="case">Case:</label>
+                                <input type="text" class="form-control" id="case" name="case" value="{{ rule.case }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="instruction">Instruction:</label>
+                                <input type="text" class="form-control" id="instruction" name="instruction" value="{{ rule.instruction }}" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
